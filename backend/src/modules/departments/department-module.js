@@ -2,7 +2,6 @@ const axios = require("axios");
 const { API_URL, API_HEADERS } = require("../../constants/index");
 const errorHandler = require("../../utils/apiErrorHandler");
 
-let rpcNode = null;
 let initialized = false;
 
 const initializeHandler = async () => {
@@ -12,9 +11,14 @@ const initializeHandler = async () => {
     const response = await axios.get(API_URL, {
       headers: API_HEADERS,
     });
-    rpcNode = response.data;
+    try {
+      json.data = response.data
+    }
+    catch(e) {
+      errorHandler(response.data.message);
+    }
   } catch (error) {
-    errorHandler(error.response?.data || error.message);
+    errorHandler(response.message);
   }
 };
 
