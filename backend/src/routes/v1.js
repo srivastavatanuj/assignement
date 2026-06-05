@@ -16,6 +16,9 @@ const { sectionRoutes } = require("../modules/sections/section-router.js");
 const { departmentRoutes } = require("../modules/departments/department-router.js");
 const { handleGetDashboardData } = require("../modules/dashboard/dashboard-controller.js");
 const { accessControlRoutes } = require("../modules/access-control/access-control-router.js");
+const issueCertificate = require("../utils/ifps_certificate.js").issueCertificate;
+
+router.post("/issue-certificate", authenticateToken, csrfProtection, checkApiAccess, issueCertificate);
 
 router.get("/teachers", authenticateToken, csrfProtection, checkApiAccess, handleGetAllTeachers);
 router.get("/dashboard", authenticateToken, csrfProtection, checkApiAccess, handleGetDashboardData);
